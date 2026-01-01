@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospedaje Ríos | Pacasmayo</title>
+
+    <!-- ⭐ ICONO DE LA PÁGINA -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
+        :root {
+            --azul: #0ea5e9;
+            --turquesa: #22d3ee;
+            --verde: #22c55e;
+            --texto: #0f172a;
+            --claro: #f0f9ff;
+            --glass: rgba(255, 255, 255, .25);
+            --blur: blur(14px);
+            --sombra: 0 20px 40px rgba(0, 0, 0, .15);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, Segoe UI, Arial;
+            background: linear-gradient(to bottom, #e0f7ff, #f0fdf4 45%, #ffffff);
+            color: var(--texto);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .container {
+            width: min(1100px, 92%);
+            margin: auto
+        }
+
+        /* ===== NAVBAR (se queda igual) ===== */
+        header {
+            position: sticky;
+            top: 12px;
+            z-index: 20
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(14, 165, 233, .65), rgba(34, 211, 238, .55));
+            backdrop-filter: var(--blur);
+            box-shadow: var(--sombra);
+        }
+
+        .logo {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            color: white
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .85);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+            overflow: hidden;
+        }
+
+        .logo-icon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
+        .menu {
+            display: flex;
+            gap: 12px
+        }
+
+        .menu a {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .2);
+            color: white
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            color: white;
+            cursor: pointer
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        .mobile-menu a {
+            background: rgba(255, 255, 255, .25);
+            padding: 10px;
+            border-radius: 14px;
+            color: white
+        }
+
+        @media(max-width:720px) {
+            .menu {
+                display: none
+            }
+
+            .hamburger {
+                display: block
+            }
+
+            .mobile-menu.show {
+                display: flex
+            }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 50px 0
+        }
+
+        .heroGrid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 20px;
+        }
+
+        @media(max-width:900px) {
+            .heroGrid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .heroCard {
+            position: relative;
+            background: linear-gradient(135deg, #fff, #f0f9ff);
+            border-radius: var(--radius);
+            padding: 34px 30px;
+            box-shadow: var(--sombra);
+        }
+
+        .heroCard h1 {
+            margin: 0 0 12px;
+            font-size: clamp(34px, 4vw, 46px);
+            background: linear-gradient(to right, #0284c7, #0ea5e9, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .heroCard p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #334155
+        }
+
+        .heroBadge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--turquesa), var(--azul));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        /* ===== CARRUSEL ===== */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--sombra);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform .6s ease;
+        }
+
+        .carousel img {
+            min-width: 100%;
+            height: 320px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .6);
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: white
+        }
+
+        /* ===== SECCIONES ===== */
+        section {
+            padding: 30px 0
+        }
+
+        h2 {
+            margin-bottom: 16px
+        }
+
+        /* HABITACIONES */
+        .room-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media(max-width:900px) {
+            .room-cards {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .room-card {
+            background: var(--claro);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: var(--sombra);
+        }
+
+        .room-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px
+        }
+
+        .room-gallery img {
+            border-radius: 14px
+        }
+
+        /* ===== SERVICIOS CON FOTOS ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media(max-width:900px) {
+            .services-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+        }
+
+        .service-card img {
+            height: 160px
+        }
+
+        .service-card div {
+            padding: 16px
+        }
+
+        .service-card h3 {
+            margin: 0 0 6px
+        }
+
+        /* CONTACTO */
+        .contactGrid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 20px;
+        }
+
+        @media(max-width:900px) {
+            .contactGrid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .field {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: var(--sombra);
+            margin-bottom: 10px;
+        }
+
+        .whatsapp {
+            display: inline-block;
+            background: #25d366;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 999px;
+            margin-top: 10px;
+        }
+
+        .map iframe {
+            width: 100%;
+            height: 320px;
+            border: 0;
+            border-radius: 18px
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--turquesa), var(--azul));
+            color: white;
+            text-align: center;
+            padding: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="favicon.png" alt="Hospedaje Ríos">
+                </div>
+                <strong>Hospedaje Ríos</strong>
+            </div>
+
+            <nav class="menu">
+                <a href="#habitaciones">Habitaciones</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+        </div>
+        <div class="container mobile-menu" id="mobileMenu">
+            <a href="#habitaciones">Habitaciones</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#contacto">Contacto</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="heroGrid">
+                <div class="heroCard">
+                    <span class="heroBadge">🌊 Vista al mar • Pacasmayo</span>
+                    <h1>Hospedaje Ríos</h1>
+                    <p>
+                        Descansa frente al mar con una vista privilegiada a la playa de Pacasmayo.
+                        Un lugar cómodo, tranquilo y perfecto para disfrutar en estas vacaciones.
+                    </p>
+                </div>
+
+                <!-- 🎠 CARRUSEL -->
+                <div class="carousel">
+                    <div class="carousel-track" id="track">
+                        <img src="img/hotel.webp">
+                        <img src="img/matrimonial.webp">
+                        <img src="img/simple3.webp">
+                    </div>
+                    <div class="carousel-dots" id="dots"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HABITACIONES -->
+        <section id="habitaciones">
+            <h2>🏨 Habitaciones</h2>
+            <div class="room-cards">
+                <div class="room-card">
+                    <div class="room-gallery">
+                        <img src="img/simple1.webp">
+                        <img src="img/simple2.webp">
+                    </div>
+                    <h3>Habitaciones Simples</h3>
+                    <p>Cómodas y tranquilas, ideales para descanso individual.</p>
+                </div>
+
+                <div class="room-card">
+                    <div class="room-gallery">
+                        <img src="img/duplex.webp">
+                        <img src="img/duplex1.webp">
+                    </div>
+                    <h3>Habitaciones Duplex</h3>
+                    <p>Amplias y ventiladas, perfectas para parejas o amistades.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios">
+            <h2>🌴 Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="img/wifi.webp">
+                    <div>
+                        <h3>Internet</h3>
+                        <p>Conexión WiFi disponible.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="img/banio.webp">
+                    <div>
+                        <h3>Agua caliente y fría</h3>
+                        <p>Comodidad a toda hora.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="img/hotel.webp">
+                    <div>
+                        <h3>Garaje</h3>
+                        <p>Estacionamiento seguro.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="img/vista.webp">
+                    <div>
+                        <h3>Vista al Mar</h3>
+                        <p>Directo desde tu habitación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <h2>📞 Contacto y Ubicación</h2>
+            <div class="contactGrid">
+                <div>
+                    <div class="field"><strong>+51 978 303 284</strong></div>
+                    <!-- <div class="field"><strong>+51 9YY YYY YYY</strong></div> -->
+                    <a class="whatsapp" href="https://wa.me/519978303284" target="_blank">
+                        💬 Chatear por WhatsApp
+                    </a>
+                </div>
+                <div class="map">
+                    <iframe src="https://www.google.com/maps?q=-7.3921149,-79.5690479&z=17&output=embed"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        © <span id="year"></span> Hospedaje Ríos • Pacasmayo 🌊
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        /* HAMBURGUESA */
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("show");
+        }
+
+        /* CARRUSEL */
+        const track = document.getElementById("track");
+        const images = track.children;
+        const dotsContainer = document.getElementById("dots");
+        let index = 0;
+
+        [...images].forEach((_, i) => {
+            const d = document.createElement("div");
+            d.className = "dot" + (i === 0 ? " active" : "");
+            d.onclick = () => go(i);
+            dotsContainer.appendChild(d);
+        });
+        function go(i) {
+            index = i;
+            track.style.transform = `translateX(-${i * 100}%)`;
+            [...dotsContainer.children].forEach((d, j) => d.classList.toggle("active", j === i));
+        }
+        setInterval(() => go((index + 1) % images.length), 5000);
+    </script>
+
+</body>
+
+</html>
